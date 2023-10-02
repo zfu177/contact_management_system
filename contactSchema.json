@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "http://example.com/contacts.json",
+  "type": "object",
+  "default": {},
+  "title": "Root Schema",
+  "required": [
+      "firstName",
+      "lastName",
+      "email",
+      "countryCode",
+      "phone"
+  ],
+  "properties": {
+      "firstName": {
+          "type": "string",
+          "default": "",
+          "title": "The firstName Schema",
+          "examples": [
+              "Eric"
+          ],
+          "maxLength": "25"
+      },
+      "lastName": {
+          "type": "string",
+          "default": "",
+          "title": "The lastName Schema",
+          "examples": [
+              "Fu"
+          ],
+          "maxLength": "25"
+      },
+      "email": {
+          "type": "string",
+          "default": "",
+          "title": "The email Schema",
+          "format": "email",
+          "examples": [
+              "z.fu@mybvc.ca"
+          ]
+      },
+      "countryCode": {
+          "type": "integer",
+          "default": 0,
+          "title": "The countryCode Schema",
+          "examples": [
+              1
+          ],
+          "maxLength": "3"
+      },
+      "phone": {
+          "type": "integer",
+          "default": 0,
+          "title": "The phone Schema",
+          "examples": [
+              8252885204
+          ],
+          "maxLength": 12
+      },
+      "notes": {
+          "type": "string",
+          "default": "",
+          "title": "The notes Schema",
+          "examples": [
+              "abcd"
+          ],
+          "maxLength": "255"
+      }
+  },
+  "examples": [{
+      "firstName": "Eric",
+      "lastName": "Fu",
+      "email": "z.fu@mybvc.ca",
+      "countryCode": 1,
+      "phone": 1234567890,
+      "notes": "abcd"
+  }]
+}

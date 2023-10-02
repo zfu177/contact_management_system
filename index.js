@@ -1,8 +1,18 @@
 const express = require('express');
 require('dotenv').config();
-const { get, getById, post, put, deleteById } = require('./functions/contacts.js');
+const validate = require('jsonschema').validate;
+
+const contactSchema = require('./contactSchema.json');
+const {
+  getContacts,
+  getContactById,
+  addContact,
+  updateContact,
+  deleteContactById
+} = require('./functions/contacts.js');
 
 const port = process.env.PORT;
+
 const app = express();
 
 app.use(express.json());
@@ -19,31 +29,55 @@ app.get('/', (req, res) => {
 
 app.get('/contacts', async (req, res) => {
   logging(req);
-  const contacts = await get();
+  const contacts = await getContacts();
   res.send(contacts);
 });
 
 app.get('/contacts/:id', async (req, res) => {
   logging(req);
-  const contacts = await getById(req.params.id);
+  const contacts = await getContactById(req.params.id);
   res.send(contacts);
 });
 
 app.post('/contacts', async (req, res) => {
   logging(req);
-  const result = await post(req.body);
+
+  // Validate request payload against contact schema
+  const { errors } = validate(req.body, contactSchema);
+  if (errors.length > 0) {
+    const errorArray = errors.map(({ path, message }) => `${path} ${message}`);
+    res.status(400).send({ errors: errorArray });
+    return;
+  }
+
+  const result = await addContact(req.body);
+  if (result.errors) {
+    res.status(400);
+  }
   res.send(result);
 });
 
 app.put('/contacts/:id', async (req, res) => {
   logging(req);
-  const result = await put(req.params.id, req.body);
+
+  // Validate request payload against contact schema
+  const { errors } = validate(req.body, contactSchema);
+  if (errors.length > 0) {
+    const errorArray = errors.map(({ path, message }) => `${path} ${message}`);
+    res.status(400).send({ errors: errorArray });
+    return;
+  }
+
+  const result = await updateContact(req.params.id, req.body);
+  if (result.errors) {
+    res.status(400);
+  }
   res.send(result);
 });
 
 app.delete('/contacts/:id', async (req, res) => {
   logging(req);
-  const result = await deleteById(req.params.id);
+  const result = await deleteContactById(req.params.id);
   res.send(result);
 });
 

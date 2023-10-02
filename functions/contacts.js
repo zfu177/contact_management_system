@@ -2,7 +2,7 @@ const pool = require('./dbConnection.js');
 const table = process.env.TABLE_NAME;
 
 // Get All contacts
-const get = async () => {
+const getContacts = async () => {
   const connection = await pool.getConnection();
   const [resp] = await connection.query(`SELECT * FROM ${table}`);
   connection.release();
@@ -10,7 +10,7 @@ const get = async () => {
 };
 
 // Get contact by ID
-const getById = async (id) => {
+const getContactById = async (id) => {
   const connection = await pool.getConnection();
 
   if (!Number.isInteger(parseInt(id))) {
@@ -22,7 +22,7 @@ const getById = async (id) => {
 };
 
 // Insert a new contact
-const post = async ({ firstName, lastName, email, countryCode, phone, notes }) => {
+const addContact = async ({ firstName, lastName, email, countryCode, phone, notes }) => {
   const connection = await pool.getConnection();
 
   // Duplication Check by Email
@@ -30,7 +30,7 @@ const post = async ({ firstName, lastName, email, countryCode, phone, notes }) =
     email.toLowerCase()
   ]);
   if (resp.length > 0) {
-    return { insertId: null, error: 'Email Already Exist' };
+    return { errors: ['email Already Exist'] };
   }
 
   // Insert data
@@ -39,11 +39,11 @@ const post = async ({ firstName, lastName, email, countryCode, phone, notes }) =
     [firstName, lastName, email.toLowerCase(), phone, countryCode, notes]
   );
   connection.release();
-  return { insertId };
+  return { id: insertId };
 };
 
 // Update contact By ID
-const put = async (id, { firstName, lastName, email, countryCode, phone, notes }) => {
+const updateContact = async (id, { firstName, lastName, email, countryCode, phone, notes }) => {
   if (!Number.isInteger(parseInt(id))) {
     return { affectedRows: 0 };
   }
@@ -55,7 +55,7 @@ const put = async (id, { firstName, lastName, email, countryCode, phone, notes }
     email.toLowerCase()
   ]);
   if (resp.length > 0) {
-    return { affectedRows: 0, error: 'Email Already Exist' };
+    return { errors: ['email Already Exist'] };
   }
 
   // Update data
@@ -68,7 +68,7 @@ const put = async (id, { firstName, lastName, email, countryCode, phone, notes }
 };
 
 // Delete a contact by ID
-const deleteById = async (id) => {
+const deleteContactById = async (id) => {
   if (!Number.isInteger(parseInt(id))) {
     return { affectedRows: 0 };
   }
@@ -79,4 +79,4 @@ const deleteById = async (id) => {
   return { affectedRows };
 };
 
-module.exports = { get, getById, post, put, deleteById };
+module.exports = { getContacts, getContactById, addContact, updateContact, deleteContactById };
