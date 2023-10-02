@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 require('dotenv').config();
 const validate = require('jsonschema').validate;
 
@@ -15,6 +16,8 @@ const port = process.env.PORT;
 
 const app = express();
 
+app.use(cors());
+app.options('*', cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -24,7 +27,7 @@ function logging(req) {
 
 app.get('/', (req, res) => {
   logging(req);
-  res.send({ Healthy: true });
+  res.status(204).send();
 });
 
 app.get('/contacts', async (req, res) => {
