@@ -38,7 +38,13 @@ app.get('/contacts', async (req, res) => {
 
 app.get('/contacts/:id', async (req, res) => {
   logging(req);
-  const contacts = await getContactById(req.params.id);
+  // Check if id is number
+  const id = req.params.id;
+  if (!Number.isInteger(parseInt(id))) {
+    res.status(400).send('Invalid Id Format');
+    return;
+  }
+  const contacts = await getContactById(id);
   res.send(contacts);
 });
 
@@ -63,6 +69,13 @@ app.post('/contacts', async (req, res) => {
 app.put('/contacts/:id', async (req, res) => {
   logging(req);
 
+  // Check if id is number
+  const id = req.params.id;
+  if (!Number.isInteger(parseInt(id))) {
+    res.status(400).send('Invalid Id Format');
+    return;
+  }
+
   // Validate request payload against contact schema
   const { errors } = validate(req.body, contactSchema);
   if (errors.length > 0) {
@@ -71,7 +84,7 @@ app.put('/contacts/:id', async (req, res) => {
     return;
   }
 
-  const result = await updateContact(req.params.id, req.body);
+  const result = await updateContact(id, req.body);
   if (result.errors) {
     res.status(400);
   }
@@ -80,6 +93,12 @@ app.put('/contacts/:id', async (req, res) => {
 
 app.delete('/contacts/:id', async (req, res) => {
   logging(req);
+  // Check if id is number
+  const id = req.params.id;
+  if (!Number.isInteger(parseInt(id))) {
+    res.status(400).send('Invalid Id Format');
+    return;
+  }
   const result = await deleteContactById(req.params.id);
   res.send(result);
 });
