@@ -3,10 +3,14 @@ const table = process.env.TABLE_NAME;
 
 // Get All contacts
 const getContacts = async () => {
-  const connection = await pool.getConnection();
-  const [resp] = await connection.query(`SELECT * FROM ${table}`);
-  connection.release();
-  return resp;
+  try {
+    const connection = await pool.getConnection();
+    const [resp] = await connection.query(`SELECT * FROM ${table}`);
+    connection.release();
+    return resp;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 // Get contact by ID

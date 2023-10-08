@@ -40,7 +40,8 @@
           ]
       },
       "countryCode": {
-          "type": "integer",
+          "type": "string",
+          "pattern": "[0-9]",
           "default": 0,
           "title": "The countryCode Schema",
           "examples": [
@@ -49,7 +50,8 @@
           "maxLength": "3"
       },
       "phone": {
-          "type": "integer",
+          "type": "string",
+          "pattern": "[0-9]",
           "default": 0,
           "title": "The phone Schema",
           "examples": [
