@@ -47,7 +47,8 @@
           "examples": [
               1
           ],
-          "maxLength": "3"
+          "maxLength": "3",
+          "minLength": "1"
       },
       "phone": {
           "type": "string",
@@ -57,7 +58,8 @@
           "examples": [
               8252885204
           ],
-          "maxLength": 12
+          "maxLength": "12",
+          "minLength": "1"
       },
       "notes": {
           "type": "string",
