@@ -103,6 +103,7 @@ app.delete('/contacts/:id', async (req, res) => {
   res.send(result);
 });
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`Contact Management System is listening on port ${port}`);
+  console.log(await getContacts());
 });
