@@ -15,19 +15,23 @@
       "firstName": {
           "type": "string",
           "default": "",
+          "pattern": "^[A-Za-z]*$",
           "title": "The firstName Schema",
           "examples": [
               "Eric"
           ],
+          "minLength": "1",
           "maxLength": "25"
       },
       "lastName": {
           "type": "string",
           "default": "",
+          "pattern": "^[A-Za-z]*$",
           "title": "The lastName Schema",
           "examples": [
               "Fu"
           ],
+          "minLength": "1",
           "maxLength": "25"
       },
       "email": {
@@ -37,12 +41,14 @@
           "format": "email",
           "examples": [
               "z.fu@mybvc.ca"
-          ]
+          ],
+          "minLength": "1",
+          "maxLength": "25"
       },
       "countryCode": {
           "type": "string",
-          "pattern": "[0-9]",
-          "default": 0,
+          "pattern": "^[0-9]*$",
+          "default": "1",
           "title": "The countryCode Schema",
           "examples": [
             "1"
@@ -52,8 +58,8 @@
       },
       "phone": {
           "type": "string",
-          "pattern": "[0-9]",
-          "default": 0,
+          "pattern": "^[0-9]*$",
+          "default": "0",
           "title": "The phone Schema",
           "examples": [
               "123456789"
@@ -75,8 +81,8 @@
       "firstName": "Eric",
       "lastName": "Fu",
       "email": "z.fu@mybvc.ca",
-      "countryCode": 1,
-      "phone": 1234567890,
+      "countryCode": "1",
+      "phone": "1234567890",
       "notes": "abcd"
   }]
 }
