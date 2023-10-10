@@ -105,5 +105,9 @@ app.delete('/contacts/:id', async (req, res) => {
 
 app.listen(port, async () => {
   console.log(`Contact Management System is listening on port ${port}`);
-  console.log(await getContacts());
+  const resp = await getContacts();
+  if (!resp) {
+    console.log('Unable to connect to the database');
+    process.exit(1);
+  }
 });

@@ -9,7 +9,7 @@ const getContacts = async () => {
     connection.release();
     return resp;
   } catch (e) {
-    console.log(e);
+    console.log(e.message);
   }
 };
 
