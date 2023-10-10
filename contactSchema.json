@@ -45,7 +45,7 @@
           "default": 0,
           "title": "The countryCode Schema",
           "examples": [
-              1
+            "1"
           ],
           "maxLength": "3",
           "minLength": "1"
@@ -56,7 +56,7 @@
           "default": 0,
           "title": "The phone Schema",
           "examples": [
-              8252885204
+              "123456789"
           ],
           "maxLength": "12",
           "minLength": "1"
